@@ -18,4 +18,8 @@ public class ElectricEngine extends Engine{
         System.out.println("Change of power by "+powerPercent+"%");
         return true;
     }
+    public String toString(){
+        return "Electric";
+    }
+
 }
