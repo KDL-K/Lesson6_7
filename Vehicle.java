@@ -1,18 +1,19 @@
 package com.pvt.carlib;
 
-/*import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;*/
+
 
 import java.util.Objects;
 
-public abstract class Vehicle {
+public abstract class Vehicle implements VehicleControl {
     private int wheelCount;
     private int axisCount;
     private int seatCount;
     private int weight;
 
     private final Engine engine;
+    private final Body body;
 
-    public Vehicle(int wheelCount, int axisCount, int seatCount, int weight, Engine engine) throws Exception {
+    public Vehicle(int wheelCount, int axisCount, int seatCount, int weight, Engine engine, Body body) throws Exception {
         this.wheelCount = wheelCount;
         this.axisCount = axisCount;
         this.seatCount = seatCount;
@@ -20,6 +21,12 @@ public abstract class Vehicle {
 
         if(engine != null) {
             this.engine = engine;
+        }else {
+            throw new Exception();
+        }
+
+        if(body != null) {
+            this.body = body;
         }else {
             throw new Exception();
         }
@@ -35,8 +42,26 @@ public abstract class Vehicle {
         System.out.println("Vehicle stop");
         return result;
     }
+    public boolean turnRight(int turnDegree){
+        if(turnDegree==0){
+            System.out.println("Go directly.");
+        }else {
+            System.out.println("Turned to the right by " + turnDegree + " degree.");
+        }
+        return true;
+    }
+    public boolean turnLeft(int turnDegree){
+        if(turnDegree==0){
+            System.out.println("Go directly.");
+        }else {
+            System.out.println("Turned to the left by " + turnDegree + " degree.");
+        }
+        return true;
+    }
     public abstract boolean upSpeed(int powerPercent);
     public abstract boolean downSpeed(int powerPercent);
+    public abstract void openDoor(int doorNumber);
+    public abstract void closeDoor(int doorNumber);
 
     public int getWheelCount() {
         return wheelCount;
@@ -74,6 +99,10 @@ public abstract class Vehicle {
         return engine;
     }
 
+    public Body getBody() {
+        return body;
+    }
+
     @Override
     public String toString() {
         return "Vehicle{" +
@@ -81,7 +110,8 @@ public abstract class Vehicle {
                 ", axisCount=" + axisCount +
                 ", seatCount=" + seatCount +
                 ", weight=" + weight +
-                ", engine=" + engine +
+                ", engine:" + engine +
+                ", body:" + body +
                 '}';
     }
 
@@ -94,11 +124,12 @@ public abstract class Vehicle {
                 axisCount == vehicle.axisCount &&
                 seatCount == vehicle.seatCount &&
                 weight == vehicle.weight &&
-                Objects.equals(engine, vehicle.engine);
+                Objects.equals(engine, vehicle.engine) &&
+                        Objects.equals(body, vehicle.body);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(wheelCount, axisCount, seatCount, weight, engine);
+        return Objects.hash(wheelCount, axisCount, seatCount, weight, engine, body);
     }
 }
