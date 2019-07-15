@@ -2,8 +2,8 @@ package com.pvt.carlib;
 
 public class ElectricCar extends Vehicle {
 
-    public ElectricCar(int wheelCount, int axisCount, int seatCount, int weight, Engine engine) throws Exception {
-        super(wheelCount, axisCount, seatCount, weight, engine);
+    public ElectricCar(int wheelCount, int axisCount, int seatCount, int weight, Engine engine, Body body) throws Exception {
+        super(wheelCount, axisCount, seatCount, weight, engine, body);
     }
 
     @Override
@@ -37,4 +37,13 @@ public class ElectricCar extends Vehicle {
         System.out.println("Power is lowered to "+getEngine().getPower());
         return true;
     }
+
+    public void openDoor(int doorNumber){
+        getBody().openDoor(doorNumber);
+    }
+
+    public void closeDoor(int doorNumber){
+        getBody().closeDoor(doorNumber);
+    }
+
 }
